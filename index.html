@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>성북구 지역문제 탐구 보드 · 초4 사회</title>
+<meta name="description" content="서울 성북구의 5가지 지역문제 32가지를 초등학교 4학년 눈높이로 읽고, 상황·원인·해결방법을 스스로 정리하는 수업용 웹보드">
+<style>
+  :root{
+    --ink:#26221e;
+    --ink-soft:#4d4741;
+    --ink-mute:#7a736b;
+    --paper:#fbf8f3;
+    --card:#ffffff;
+    --line:#e8e1d7;
+    --shadow:0 1px 2px rgba(60,45,30,.05), 0 8px 24px rgba(60,45,30,.06);
+    --radius:20px;
+    --safety:#c4553f;      --safety-bg:#fdf0ea;   --safety-soft:#f7ded3;
+    --env:#3f7d54;         --env-bg:#edf6ee;      --env-soft:#d8ebdd;
+    --park:#3a6aa8;        --park-bg:#edf3fb;     --park-soft:#d8e5f6;
+    --smoke:#6b57a8;       --smoke-bg:#f2eefb;    --smoke-soft:#e2daf5;
+    --trash:#2c7d74;       --trash-bg:#e9f5f3;    --trash-soft:#d2eae6;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;
+    font-size:18px;
+    line-height:1.7;
+    letter-spacing:-.01em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 96px}
+
+  /* ---------- header ---------- */
+  header.hero{padding:64px 0 8px}
+  .kicker{
+    display:inline-block;font-size:15px;font-weight:700;letter-spacing:.02em;
+    color:var(--trash);background:var(--trash-bg);
+    padding:6px 14px;border-radius:999px;margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(30px,4.4vw,46px);line-height:1.28;margin:0 0 14px;
+    letter-spacing:-.03em;font-weight:800;
+  }
+  .lede{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);margin:0;max-width:36em}
+  .howto{
+    margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 26px;box-shadow:var(--shadow);
+  }
+  .howto h2{font-size:17px;margin:0 0 12px;color:var(--ink);letter-spacing:0}
+  .howto ol{margin:0;padding-left:1.25em;display:grid;gap:6px;color:var(--ink-soft);font-size:17px}
+  .howto ol li::marker{font-weight:800;color:var(--trash)}
+  .howto .note{margin:14px 0 0;font-size:15.5px;color:var(--ink-mute)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+  .legend span{
+    font-size:14.5px;font-weight:700;padding:5px 12px;border-radius:999px;
+    border:1px solid transparent;
+  }
+
+  /* ---------- sections ---------- */
+  section.field{margin-top:56px}
+  section.field > .head{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding-bottom:14px;border-bottom:2px solid var(--soft);
+  }
+  .head .no{
+    font-size:14px;font-weight:800;color:var(--accent);
+    background:var(--bg);border-radius:8px;padding:2px 10px;
+  }
+  .head h2{font-size:clamp(24px,3vw,30px);margin:0;letter-spacing:-.03em;font-weight:800;color:var(--accent)}
+  .head .cnt{font-size:15.5px;color:var(--ink-mute);font-weight:600}
+
+  .grid{
+    display:grid;gap:18px;margin-top:24px;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  }
+
+  /* ---------- card ---------- */
+  .card{
+    position:relative;display:flex;flex-direction:column;gap:8px;
+    text-align:left;width:100%;cursor:pointer;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 20px;box-shadow:var(--shadow);
+    font-family:inherit;color:inherit;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .card:hover,.card:focus-visible{
+    transform:translateY(-3px);
+    border-color:var(--soft);
+    box-shadow:0 2px 4px rgba(60,45,30,.06), 0 16px 34px rgba(60,45,30,.10);
+  }
+  .card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  .card .top{display:flex;align-items:center;gap:10px}
+  .card .num{
+    font-size:15px;font-weight:800;min-width:34px;height:34px;border-radius:10px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--bg);color:var(--accent);
+  }
+  .card .chip{
+    font-size:13.5px;font-weight:700;color:var(--accent);
+    background:var(--bg);border-radius:999px;padding:3px 11px;
+  }
+  .card .card-title{
+    display:block;
+    font-size:clamp(19px,1.55vw,21px);line-height:1.42;margin:4px 0 0;
+    letter-spacing:-.02em;font-weight:800;
+  }
+  .card .where-line{
+    display:block;
+    font-size:15px;font-weight:700;color:var(--accent);margin:0;
+  }
+  .card .preview{
+    display:block;margin:2px 0 0;font-size:16px;line-height:1.65;color:var(--ink-soft);
+  }
+  .card .more{
+    margin-top:auto;padding-top:12px;font-size:14.5px;font-weight:700;color:var(--ink-mute);
+    display:flex;align-items:center;gap:6px;
+  }
+  .card .more .arrow{transition:transform .18s ease}
+  .card:hover .more .arrow{transform:translateX(4px)}
+
+  /* section color themes */
+  .f-safety{--accent:var(--safety);--bg:var(--safety-bg);--soft:var(--safety-soft)}
+  .f-env{--accent:var(--env);--bg:var(--env-bg);--soft:var(--env-soft)}
+  .f-park{--accent:var(--park);--bg:var(--park-bg);--soft:var(--park-soft)}
+  .f-smoke{--accent:var(--smoke);--bg:var(--smoke-bg);--soft:var(--smoke-soft)}
+  .f-trash{--accent:var(--trash);--bg:var(--trash-bg);--soft:var(--trash-soft)}
+
+  /* ---------- modal ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:60;
+    background:rgba(38,34,30,.52);
+    display:flex;align-items:center;justify-content:center;
+    padding:28px 20px;
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+    -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+  }
+  .overlay.open{opacity:1;pointer-events:auto}
+  .sheet{
+    position:relative;width:100%;max-width:820px;max-height:calc(100vh - 56px);
+    background:#fff;border-radius:26px;box-shadow:0 30px 80px rgba(20,15,10,.28);
+    display:flex;flex-direction:column;overflow:hidden;
+    transform:translateY(14px) scale(.985);transition:transform .2s ease;
+  }
+  .overlay.open .sheet{transform:none}
+  .sheet-head{
+    padding:26px 68px 20px 30px;background:var(--bg);border-bottom:1px solid var(--soft);
+    flex:0 0 auto;
+  }
+  .sheet-head .meta{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .sheet-head .num{
+    font-size:15px;font-weight:800;color:#fff;background:var(--accent);
+    padding:3px 11px;border-radius:9px;
+  }
+  .sheet-head .chip{font-size:14px;font-weight:800;color:var(--accent)}
+  .sheet-head h2{
+    margin:0;font-size:clamp(22px,3vw,28px);line-height:1.4;letter-spacing:-.025em;font-weight:800;
+  }
+  .close{
+    position:absolute;top:18px;right:18px;
+    width:46px;height:46px;border-radius:50%;border:1px solid var(--soft);
+    background:#fff;color:var(--ink-soft);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;line-height:1;font-family:inherit;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .close:hover{background:var(--bg);transform:rotate(90deg)}
+  .close:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .sheet-body{padding:26px 30px 8px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1 1 auto}
+
+  .block{margin-bottom:26px}
+  .block:last-of-type{margin-bottom:14px}
+  .block .label{
+    display:flex;align-items:center;gap:9px;
+    font-size:16px;font-weight:800;color:var(--accent);margin:0 0 9px;letter-spacing:-.01em;
+  }
+  .block .label .ico{font-size:20px;line-height:1}
+  .block p{margin:0;font-size:18.5px;line-height:1.78;color:var(--ink)}
+  .block.think{
+    background:var(--bg);border:1px solid var(--soft);border-radius:16px;
+    padding:18px 20px;
+  }
+  .block.think p{font-weight:700}
+  .src{
+    margin-top:6px;padding:16px 0 6px;border-top:1px dashed var(--line);
+    font-size:13.5px;line-height:1.65;color:var(--ink-mute);
+  }
+  .src b{color:var(--ink-mute);font-weight:700}
+
+  .sheet-foot{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 20px 18px;border-top:1px solid var(--line);background:#fff;
+  }
+  .nav-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:inherit;font-size:16px;font-weight:800;color:var(--ink-soft);
+    background:#f6f2ec;border:1px solid var(--line);border-radius:14px;
+    padding:12px 18px;cursor:pointer;min-height:48px;
+    transition:background .15s ease, color .15s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .nav-btn:hover:not(:disabled){background:var(--bg);color:var(--accent);border-color:var(--soft)}
+  .nav-btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .nav-btn:disabled{opacity:.35;cursor:default}
+  .counter{font-size:15px;font-weight:700;color:var(--ink-mute);white-space:nowrap}
+  body.locked{overflow:hidden}
+
+  /* ---------- footer ---------- */
+  footer.end{
+    margin-top:70px;padding-top:26px;border-top:1px solid var(--line);
+    font-size:14.5px;color:var(--ink-mute);line-height:1.7;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:640px){
+    body{font-size:17px}
+    .wrap{padding:0 16px 72px}
+    header.hero{padding:40px 0 0}
+    .howto{padding:18px 18px}
+    .grid{grid-template-columns:1fr;gap:14px}
+    section.field{margin-top:42px}
+    .overlay{padding:0;align-items:flex-end}
+    .sheet{max-height:100dvh;height:100dvh;border-radius:0;max-width:none}
+    .sheet-head{padding:22px 64px 16px 20px;padding-top:calc(22px + env(safe-area-inset-top))}
+    .sheet-body{padding:22px 20px 6px}
+    .block p{font-size:17.5px;line-height:1.8}
+    .sheet-foot{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+    .nav-btn{padding:12px 14px;font-size:15px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="hero">
+    <span class="kicker">초등학교 4학년 사회 · 지역문제와 해결</span>
+    <h1>성북구 지역문제,<br>우리 동네 이야기 32가지</h1>
+    <p class="lede">서울 성북구에서 실제로 일어난 일을 5가지 분야로 모았어요. 카드를 하나씩 열어 읽고, 무엇이 문제인지 스스로 정리해 보세요.</p>
+
+    <div class="howto">
+      <h2>이렇게 해요</h2>
+      <ol>
+        <li>궁금한 카드를 눌러 글을 읽어요.</li>
+        <li>글에서 <b>어디서·무슨 일이·왜</b> 일어났는지 찾아요.</li>
+        <li>내가 산다면 어떻게 해결할지 생각해서 <b>캔바</b>에 적어요.</li>
+      </ol>
+      <p class="note">정답은 없어요. 친구와 생각이 달라도 괜찮아요. 근거가 되는 숫자와 동네 이름을 꼭 함께 적어 보세요.</p>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <span class="f-safety" style="background:var(--bg);color:var(--accent)">1. 안전</span>
+      <span class="f-env" style="background:var(--bg);color:var(--accent)">2. 환경오염</span>
+      <span class="f-park" style="background:var(--bg);color:var(--accent)">3. 주차</span>
+      <span class="f-smoke" style="background:var(--bg);color:var(--accent)">4. 흡연</span>
+      <span class="f-trash" style="background:var(--bg);color:var(--accent)">5. 쓰레기</span>
+    </div>
+  </header>
+
+  <div id="sections"></div>
+
+  <footer class="end">
+    <p><b>출처 안내</b> · 각 카드의 내용은 성북구청 고시공고·민원 답변, 성북구의회 회의록, 서울시·서울시의회 자료, 지역 언론 보도를 바탕으로 초등학교 4학년이 읽기 쉽게 다시 쓴 것입니다. 조사 기준일 2026년 11월 24일.</p>
+  </footer>
+</main>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="sheet-head">
+      <div class="meta"><span class="num" id="mNum"></span><span class="chip" id="mChip"></span></div>
+      <h2 id="mTitle"></h2>
+    </div>
+    <button class="close" id="mClose" type="button" aria-label="닫기">✕</button>
+    <div class="sheet-body" id="mBody">
+      <div class="block">
+        <p class="label"><span class="ico">📍</span>어디서 생긴 문제인가요?</p>
+        <p id="mWhere"></p>
+      </div>
+      <div class="block">
+        <p class="label"><span class="ico">📰</span>지금 어떤 상황인가요?</p>
+        <p id="mSituation"></p>
+      </div>
+      <div class="block">
+        <p class="label"><span class="ico">🔎</span>왜 이런 문제가 생겼을까요?</p>
+        <p id="mWhy"></p>
+      </div>
+      <div class="block think">
+        <p class="label"><span class="ico">💡</span>캔바에 정리할 때 생각해 볼 점</p>
+        <p id="mThink"></p>
+      </div>
+      <p class="src" id="mSrc"></p>
+    </div>
+    <div class="sheet-foot">
+      <button class="nav-btn" id="mPrev" type="button">← 이전 문제</button>
+      <span class="counter" id="mCount"></span>
+      <button class="nav-btn" id="mNext" type="button">다음 문제 →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ISSUES = [
+  /* ---------------- 1. 안전 ---------------- */
+  {
+    n:1, field:"안전", theme:"safety",
+    title:"비가 오면 무너질까 불안한 옹벽",
+    dong:"정릉동 · 북악중학교 가는 길",
+    preview:"30년 된 옹벽 위에는 25가구가 살고, 바로 아래는 학생들이 다니는 골목이에요.",
+    where:"정릉동 한 빌라 단지의 옹벽이에요. 길이 70m, 높이 5~6.6m로 어른 두세 명을 쌓아 놓은 높이예요. 옹벽 위에는 25가구가 살고, 바로 아래 골목은 북악중학교로 가는 학생들의 등하굣길로 쓰여요.",
+    situation:"이 옹벽은 30여 년 전 빌라를 지을 때 함께 만들었어요. 3년 전부터 벽에 금이 가기 시작했고, 요즘은 벽 가운데가 조금씩 밀려 나오고 있어요. 성북구는 서울시에 정밀안전진단 비용을 신청해 지금 조사를 진행하고 있어요. 같은 정릉동의 한 연립주택은 진단 결과 D급(건물이 많이 약해져 급히 고치거나 쓰지 못하게 해야 하는 단계)을 받았어요. 2026년 봄에는 성북구가 급경사지 49곳, 오래된 옹벽 같은 시설 24곳, 빈집 228곳까지 모두 326곳을 점검했어요.",
+    why:"성북구는 언덕과 골목이 많은 동네라 30년이 넘은 옹벽과 담장이 많아요. 그런데 벽과 집, 학교 가는 길이 아주 가까이 붙어 있어서 하나가 무너지면 여러 곳이 한꺼번에 위험해져요.",
+    think:"옹벽을 고치거나 옮기는 일은 돈도 시간도 많이 들어요. 돈을 적게 쓰면서도 사람들을 지킬 수 있는 방법에는 무엇이 있을까요?",
+    source:"서울Pn(서울신문) 「옹벽·공사장 등 326곳 현장 점검…성북, 해빙기 안전사고 예방한다」, 2026-03-02 · 성북구 해빙기 점검 자료"
+  },
+  {
+    n:2, field:"안전", theme:"safety",
+    title:"땅이 움푹 꺼지는 싱크홀",
+    dong:"하월곡동 · 삼선동 · 장위동",
+    preview:"최근 5년 동안 성북구에서만 11번 땅이 꺼졌어요. 서울 25개 구 가운데 3번째로 많아요.",
+    where:"성북구 여러 동네예요. 실제로 하월곡동, 삼선동1가, 장위동에서 땅이 꺼진 기록이 남아 있어요.",
+    situation:"2020년부터 5년 동안 서울에서 땅이 꺼진 일은 118번이었는데, 그중 11번이 성북구에서 일어났어요. 서울 25개 구 가운데 3번째로 많은 숫자예요. 2025년 3월 강동구에서 땅이 꺼져 사람이 숨지는 사고가 난 뒤 서울시가 모든 구를 조사했는데, 성북구는 20개 동 전부가 '위험 3등급'이었어요. 하월곡동에서는 2m×5m×3m나 되는 큰 구멍이 생긴 적도 있어요.",
+    why:"땅속에는 30년이 넘은 하수관이 많아요. 관이 낡아 물이 새면 흙이 조금씩 씻겨 내려가 땅속에 빈 공간이 생기고, 그 위를 차와 사람이 계속 지나다 보면 결국 땅이 꺼지게 돼요.",
+    think:"땅이 꺼진 뒤에 아는 것 말고, 꺼지기 전에 미리 알아채려면 어떤 방법이 좋을까요?",
+    source:"딜라이브뉴스 「성북구의회, 싱크홀 대책·청춘카페 촉구」, 2025-09-03 · 서울Pn 「서울시의회 도시안전건설위원회, 행감 중 노후 하수관로 정비 현장 점검」, 2025-11-12"
+  },
+  {
+    n:3, field:"안전", theme:"safety",
+    title:"비가 오면 길이 잠기는 골목",
+    dong:"안암동",
+    preview:"낙엽과 담배꽁초가 빗물받이를 막아 비가 올 때 길이 잠겨요.",
+    where:"안암동 주민센터 근처, 비가 많이 올 때 물이 잘 빠지지 않는 골목 10곳이에요.",
+    situation:"안암동 주민센터와 자율방재단은 2026년 11월 19일, 물이 고이기 쉬운 곳 10곳의 빗물받이 덮개를 열어 청소했어요. 이 청소는 4월과 6월에 이어 세 번째였어요. 빗물받이 안에는 낙엽과 담배꽁초가 가득 쌓여 있었고, 두 사람이 한 조가 되어 치웠어요. 물이 빠지지 않으면 길이 잠기고, 지하나 반지하에 사는 집은 하수구 물이 거꾸로 올라와 집 안까지 물이 들어올 수 있어요.",
+    why:"성북천, 정릉천 같은 하천과 언덕 골목이 가까워서 비가 조금만 많이 와도 물이 한곳에 모여요. 그 위에 나뭇잎과 꽁초가 빗물이 들어가는 구멍을 막으면 물이 갈 곳을 잃어버려요.",
+    think:"치우는 사람만 늘리면 해결될까요? 담배꽁초를 버리는 사람을 줄이려면 어떤 방법이 좋을까요?",
+    source:"국제뉴스 「“낙엽으로 인한 침수 대비”…성북구 안암동, 가을철 빗물받이 점검」, 2026-11-20 · 성북구청 「침수방지 시설설치」 안내"
+  },
+  {
+    n:4, field:"안전", theme:"safety",
+    title:"어린이와 어르신이 다치는 교통사고",
+    dong:"성북구 통학로 · 이면도로",
+    preview:"2024년 성북구에서 숨진 7명 가운데 3명이 65세 이상 어르신이었어요.",
+    where:"성북구의 좁은 이면도로와 보도가 없는 통학로예요. 초등학교 29곳, 유치원 40곳 등 모두 96곳이 어린이보호구역으로 지정되어 있어요.",
+    situation:"2024년 성북구에서 어린이가 다친 교통사고는 33건이었고, 그중 1건은 어린이보호구역 안에서 일어났어요. 어르신 사고는 271건으로 전체 사고의 21.1%를 차지했고, 숨진 어르신은 3명으로 전체 사망자의 42.8%였어요. 사고를 낸 운전자 10명 중 5명이 넘는 사람이 '안전운전 의무를 지키지 않았다'는 이유였어요.",
+    why:"성북구는 차가 다니는 길과 사람이 다니는 길이 나뉘지 않은 좁은 골목이 많아요. 어린이는 키가 작아 차 안에서 잘 보이지 않고, 어르신은 걷는 속도가 느려 갑자기 나타난 차를 피하기 어려워요.",
+    think:"차를 고치는 방법, 길을 고치는 방법, 사람을 가르치는 방법이 있어요. 이 세 가지 가운데 어디에 먼저 힘을 쓰면 좋을까요?",
+    source:"성북구 「2026년도 성북구 교통안전시행계획」, 2026-03-05 · 공공데이터포털 「성북구 옐로카펫 위치」"
+  },
+  {
+    n:5, field:"안전", theme:"safety",
+    title:"일주일 사이 두 번 난 불, 공장과 집이 한 건물에",
+    dong:"장위동",
+    preview:"1층 가게, 2층 봉제공장, 3층 집이 한 건물에 있어요. 불이 나면 대피할 곳이 마땅치 않아요.",
+    where:"장위동의 1층 상가·2층 봉제공장·3층 주거가 겹친 건물이에요. 장위전통시장 주변도 같은 구조예요.",
+    situation:"2026년 11월 3일 밤, 장위동 3층 건물 2층 봉제공장에서 불이 나 1명이 숨졌어요. 그 건물은 1층은 가게, 2층은 공장, 3층은 가족이 사는 집으로 되어 있었어요. 엿새 뒤인 11월 9일 새벽에는 장위전통시장 근처 상가에서 또 불이 났어요(사람은 다치지 않았어요). 성북구의회에서는 영세 사업장에 불을 빨리 알려 주는 감지기와 경보기, 소화기를 설치하자고 제안했어요.",
+    why:"장위동에는 작은 봉제공장과 집이 한 건물에 겹친 곳이 많아요. 이런 건물은 규모가 작아서 '불이 나면 알려 주는 장치를 꼭 달아야 하는' 기준에 해당하지 않는 경우가 많아요.",
+    think:"건물을 새로 짓지 않아도 안전을 높일 수 있는 방법이 있을까요? 적은 돈으로 할 수 있는 일부터 생각해 보세요.",
+    source:"성북구의회 제323회 본회의 제1차 회의록, 김경이 의원 5분 자유발언, 2026-11-16"
+  },
+
+  /* ---------------- 2. 환경오염 ---------------- */
+  {
+    n:6, field:"환경오염", theme:"env",
+    title:"성북천 물고기 1,000마리가 숨진 날",
+    dong:"삼선동 · 성북천",
+    preview:"2022년 11월, 성북천에서 물고기 1,000여 마리가 한꺼번에 죽었어요.",
+    where:"삼선동 삼선교 분수광장 옆 성북천이에요.",
+    situation:"2022년 11월 1일, 성북천에서 치어까지 합쳐 물고기 1,000여 마리가 죽어 떠올랐어요. 조사해 보니 물속에 하수가 섞여 들어갔고, 물의 더러운 정도를 숫자로 나타내는 BOD(생물이 물속 산소를 얼마나 쓰는지 재는 값)가 41.4~43.7mg/L까지 올라갔어요. 보통 10을 넘으면 '아주 나쁜 물'인데, 그보다 4배나 높았던 거예요. 지금은 성북천과 정릉천이 1급수에 가까운 깨끗한 물로 돌아왔어요.",
+    why:"서울의 하수관은 1만 1,000km나 되는데, 그중 30%가 30년이 넘었어요. 낡은 관에 금이 가거나 이음새가 벌어지면 하수가 하천으로 새어 들어갈 수 있어요.",
+    think:"물고기가 죽고 나서 알게 되는 것 말고, 죽기 전에 미리 알아챌 수 있는 방법은 없을까요?",
+    source:"경향신문 「성북천 물고기들은 왜 '떼죽음'을 당했을까」, 2022-11-25 · 뉴스로 「성북구 주요 하천 수질 양호…통합수질지수 '좋음' 기록」, 2026-01-29"
+  },
+  {
+    n:7, field:"환경오염", theme:"env",
+    title:"새벽부터 들리는 공사장 소리와 먼지",
+    dong:"삼선동 · 보문동 · 종암동",
+    preview:"공사장 소음 민원이 계속되는데, 구청은 '법에 기준이 없다'고 답했어요.",
+    where:"삼선동 롯데캐슬 공사장, 보문로 135 일대 도로공사, 종암중학교 앞 신축 공사장이에요.",
+    situation:"2026년 4월, 삼선동 공사장 근처 주민이 매주 토요일 새벽에 나는 소음 민원을 냈어요. 성북구는 현장 책임자에게 주말과 이른 시간에는 시끄러운 일을 하지 말라고 부탁했지만, '공사하는 요일과 시간에 대한 법적 기준이 없어 강제로 막을 수는 없다'고 답했어요. 5월에는 보문로 일대 새벽 도로공사 소음 민원이, 10월에는 종암중학교 앞 공사 민원이 이어졌어요. 서울시는 2026년 1~4월 공사장 220곳을 점검해 먼지를 막는 시설을 갖추지 않은 16곳을 형사입건했어요.",
+    why:"성북구는 재개발·재건축 공사가 많아요. 그런데 공사 시간을 정한 법이 없어서 구청이 '하지 마세요'라고 부탁만 할 수 있고, 벌을 줄 수는 없어요.",
+    think:"법이 없어서 못 막는다면, 법이 만들어지기 전에 주민과 회사가 스스로 지킬 수 있는 약속을 만들 수 있을까요?",
+    source:"성북구청 「구청장에게 바란다」 민원 20260404-00002 및 환경과 답변, 2026-04-07 · 서울시 「서울시, 공사장 비산먼지 관리실태 집중단속…16곳 적발」, 2026-05-07"
+  },
+  {
+    n:8, field:"환경오염", theme:"env",
+    title:"40~50년 된 슬레이트 지붕, 아직 258곳",
+    dong:"정비구역 밖 오래된 주택가",
+    preview:"슬레이트 지붕에는 1급 발암물질(암을 일으키는 물질)이 들어 있어요. 그런데 철거 신청은 1년에 1건뿐이었어요.",
+    where:"재개발 구역 밖에 남은 오래된 집들이에요. 성북구에는 이런 슬레이트 건물이 258곳 있어요.",
+    situation:"슬레이트는 예전에 지붕 재료로 많이 썼는데, 지금은 1급 발암물질(사람에게 암을 일으킨다고 정해진 가장 위험한 물질)로 정해져 있어요. 성북구에는 정비구역 밖에 40~50년 된 슬레이트 건물이 258곳 있고, 이는 전체 슬레이트 건물의 30%예요. 구와 서울시가 철거비를 지원하지만 지난 3년 동안 1년에 7곳씩만 철거했고, 2025년에는 10월까지 신청이 1곳뿐이었어요.",
+    why:"철거하는 동안 집을 비우거나 가게 문을 닫아야 하고, 먼지가 날리지 않게 막는 비용도 커요. 지원금만으로는 이런 손해를 채울 수 없어서 신청을 포기하게 돼요.",
+    think:"사람들이 신청을 안 하는 이유가 돈 때문이라면, '철거비' 말고 무엇을 함께 도와주면 신청할까요?",
+    source:"성북구의회 제315회 본회의 제2차 회의록, 임현주 의원 5분 자유발언, 2025-12-12 · 공공데이터포털 공공건축물 석면조사 현황"
+  },
+  {
+    n:9, field:"환경오염", theme:"env",
+    title:"쓰레기 모으는 곳에서 나는 냄새, 30년째",
+    dong:"하월곡동 · 월곡적환장",
+    preview:"월곡적환장은 하루 120t의 쓰레기를 모아요. 1990년부터 주민들은 냄새와 소음에 시달렸어요.",
+    where:"하월곡동 월곡적환장이에요. '적환장'은 쓰레기를 작은 차에서 큰 차로 옮겨 실어 나르는 곳이에요. 넓이 1,493㎡로 축구장의 5분의 1쯤 돼요.",
+    situation:"월곡적환장은 1990년에 문을 열었고, 하루에 120t의 쓰레기를 모아요. 120t은 1t 트럭 120대를 꽉 채우는 양이에요. 근처 주민들은 냄새와 소음, 지저분한 모습 때문에 오랫동안 민원을 냈고, 2013년 구의회에서도 '옮기고 싶지만 새 자리가 없다'는 이야기가 나왔어요. 2020년부터 433억 원을 들여 시설을 땅속으로 옮기고 그 위에 수영장과 헬스장이 있는 체육관을 짓는 공사가 시작됐어요.",
+    why:"쓰레기는 어딘가에서 모아야 하는데, 이미 지어진 시설을 다른 곳으로 옮기려면 새 땅을 찾아야 해요. 도시 안에는 그런 땅이 거의 없어서 문제가 오래 이어져요.",
+    think:"없애기 어려운 시설이라면, 냄새와 소리를 줄이거나 주민에게 이익이 되는 모습으로 바꾸는 방법은 무엇이 있을까요?",
+    source:"헤럴드경제 「악취 나는 월곡 적환장, 다목적체육관으로 변신」, 2020-01-03 · 서울시티 「서울시의회 유만희 부위원장, 생활폐기물 적환장 31곳 악취·소음 민원 잇따르는데 서울시 지원 전무」, 2026-11-09"
+  },
+  {
+    n:10, field:"환경오염", theme:"env",
+    title:"겨울마다 찾아오는 미세먼지, 39%는 우리 집 난방",
+    dong:"길음동 · 성북구 전역",
+    preview:"성북구 초미세먼지의 39%는 난방에서 나와요. 12월~3월에는 5등급 차량이 서울에 들어올 수 없어요.",
+    where:"성북구 집집마다의 보일러와 도로예요. 미세먼지를 재는 측정소는 길음2동 주민센터에 있어요.",
+    situation:"미세먼지가 심한 12월부터 3월까지 서울과 성북구는 '계절관리제'를 해요. 성북구에서 나오는 아주 작은 먼지(초미세먼지)의 39%가 겨울철 난방에서 나와요. 그래서 오래된 보일러를 공기 오염 물질이 8분의 1로 줄어드는 새 보일러로 바꾸도록 돕고, 큰 건물은 난방 온도를 20℃로 맞추게 해요. 도로도 하루 3번 씻어 먼지를 줄여요. 매연이 많은 5등급 차량은 평일 6시~21시에 서울과 수도권을 다닐 수 없고, 어기면 10만 원을 내요.",
+    why:"성북구는 집이 많고 겨울에 난방을 오래 켜는 동네예요. 여기에 자동차와 공사장 먼지까지 더해져 겨울 공기가 나빠져요.",
+    think:"겨울철 공기를 깨끗하게 만드는 일에서 '우리 집'이 할 수 있는 일과 '구청'이 해야 하는 일을 나누어 보세요.",
+    source:"시민일보 「성북구, '미세먼지 계절관리제' 시행」, 2021-11-15 · 서울시 대기환경정보 측정소 안내"
+  },
+
+  /* ---------------- 3. 주차 ---------------- */
+  {
+    n:11, field:"주차", theme:"park",
+    title:"1,800명이 기다리는 주차 자리",
+    dong:"석관동 · 삼선동1가",
+    preview:"석관동에서 '우리 집 앞 주차 자리'를 신청한 사람이 1,800여 명이나 기다리고 있어요.",
+    where:"석관동과 삼선동1가 등 좁은 주택가 골목이에요. 장위동, 종암동, 보문동도 주차 문제가 심해요.",
+    situation:"성북구는 집 앞에 '거주자우선주차' 자리를 만들어 그 동네에 사는 주민에게 먼저 주차하게 해요. 그런데 석관동에서는 자리를 기다리는 사람이 1,800여 명이고, 삼선동1가에서도 150여 명이 기다려요. 성북구의 주차 계획 문서에는 '거주자 주차 자리가 너무 적어서 장위동, 석관동, 종암동, 보문동이 특히 심하다'고 적혀 있어요.",
+    why:"골목이 좁아서 주차 자리로 만들 수 있는 공간이 한정돼 있어요. 차는 계속 늘어나는데 자리는 늘릴 곳이 없으니 기다리는 사람만 쌓여요.",
+    think:"자리를 더 만들 수 없다면, '한 자리를 여러 사람이 나눠 쓰는' 방법은 어떨까요? 어떤 점이 불편할지도 함께 생각해 보세요.",
+    source:"아시아경제 「성북구, 주택가 주차난 숨통…석관동 공영주차장 준공」, 2024-08-30 · 성북구 통합주차시스템 「주차정책 추진방향」"
+  },
+  {
+    n:12, field:"주차", theme:"park",
+    title:"서울 평균보다 적은 공영주차장",
+    dong:"성북구 14곳 · 길음동",
+    preview:"성북구 공영주차장은 14곳 882면. 차 100대당 자리 수가 서울 평균보다 적어요.",
+    where:"성북구 곳곳의 공영주차장이에요. 경동고, 삼선동, 마을공원, 석관동, 동방고개, 구청 등 14곳이 있어요.",
+    situation:"성북구 공영주차장은 14곳에 모두 882면이에요. 882면은 자동차 882대를 세울 수 있는 크기예요. 차 100대가 있을 때 주차 자리가 몇 개인지 재는 '주차장 확보율'은 성북구가 139.6%로 서울 평균 147.1%보다 낮아요. 2025년 조사에서는 20개 동을 558개의 작은 구역으로 나누어 어디가 특히 부족한지 살폈어요. 길음 지역은 서울 평균보다 340면이 부족하다고 나왔어요.",
+    why:"아파트를 지을 때 만든 주차장까지 숫자에 넣으면 많아 보이지만, 골목 주민이 실제로 쓸 수 있는 자리는 훨씬 적어요. 동네마다 자리가 남는 곳과 모자란 곳의 차이가 아주 커요.",
+    think:"주차장을 새로 짓는 것 말고, 낮에는 비어 있는 건물 주차장을 밤에 빌려 쓰는 방법은 왜 잘 안 될까요? 무엇을 바꾸면 될까요?",
+    source:"성북구 통합주차시스템 「주차장 현황」 · 시민일보 「성북구, 주차장 수급·관리 조사 보고회」, 2025-12-09"
+  },
+  {
+    n:13, field:"주차", theme:"park",
+    title:"밤이 되면 골목이 주차장, 소방차가 못 들어와요",
+    dong:"성북구 주택가 이면도로",
+    preview:"불이 나도 큰 소방차가 골목에 들어오지 못해 소방호스를 들고 뛰어가야 해요.",
+    where:"성북구 주택가의 좁은 이면도로예요. 퇴근 시간이 지나면 차가 가득 차는 골목이에요.",
+    situation:"성북구 주차 계획 문서에는 '밤에는 대부분의 이면도로가 무질서한 주차장이 되어 소방차가 들어갈 수 없다'고 적혀 있어요. 실제로 성북구 119 안전센터 관계자는 '대형 소방차는 그 동네에 들어갈 엄두도 내지 못하고, 소방호스를 끌고 한참을 뛰어가서 불을 끈다'고 말했어요. 성북구는 불법 주정차를 찍는 CCTV를 84곳에 257대 두고 있지만, 밤에는 단속이 어려워요.",
+    why:"낮에는 차를 다른 곳에 두었다가 밤에 집 앞으로 가져오기 때문이에요. 밤에는 단속하는 사람이 거의 없어서 차를 빼지 않아도 그대로예요.",
+    think:"차를 뺄 곳이 없는데 단속만 세게 하면 어떻게 될까요? 주민이 스스로 지킬 수 있는 규칙을 만든다면 어떤 모습일까요?",
+    source:"성북구 통합주차시스템 「주차정책 추진방향」 · 헤럴드경제 「[르포] '다닥다닥' 좁은 골목…화마에 무방비」, 2016-11-09"
+  },
+  {
+    n:14, field:"주차", theme:"park",
+    title:"점심엔 봐주고 저녁엔 안 봐주는 주차 단속",
+    dong:"삼선동 · 삼선교로23길",
+    preview:"음식점 골목은 점심시간 주차 단속을 봐주지만, 저녁에는 봐주지 않아요.",
+    where:"삼선교로23길 7 일대, 음식점이 모여 있는 골목이에요.",
+    situation:"2026년 1월, 이 골목의 가게 주인들이 '저녁 5시부터 9시까지도 주차 단속을 봐주거나, 손님이 차를 댈 수 있는 곳을 마련해 달라'고 요청했어요. 성북구는 지금 점심시간(11시~2시 30분)에는 CCTV 주차 단속을 하지 않아요. 그런데 저녁 요청은 '차가 몰리는 시간이고, 밤에 걷는 사람이 위험하며, 다른 동네와 기준이 달라지면 형평성 문제가 생긴다'며 받아들이지 않았어요.",
+    why:"골목 상권에는 주차장이 없어서 손님이 차를 대지 못하면 가게에 오기 어려워요. 그렇다고 차를 그냥 두게 하면 길이 막히고 사람이 다칠 수 있어요.",
+    think:"가게 주인, 손님, 걷는 사람 모두가 만족할 수 있는 방법이 있을까요? 세 사람의 입장을 각각 적어 보고 비교해 보세요.",
+    source:"성북구청 「구청장에게 바란다」 민원 20260107-00008 및 교통지도과 답변, 2026-01-12"
+  },
+  {
+    n:15, field:"주차", theme:"park",
+    title:"194억 원을 들여 만든 주차 자리 77개",
+    dong:"석관동 · 삼선동 · 안암동",
+    preview:"석관동 공영주차장은 194억 원을 들여 77면을 만들었어요. 자리 하나에 약 2억 5,000만 원이에요.",
+    where:"석관동 공영주차장, 삼선동 공영주차장, 안암동 고려대로16 거주자주차장, 성신여대 기숙사예요.",
+    situation:"석관동 공영주차장은 2024년 8월에 문을 열었고, 2,374㎡ 땅에 77면을 만들었어요. 공사비는 194억 원으로, 자리 하나를 만드는 데 약 2억 5,000만 원이 든 셈이에요. 삼선동 주차장은 133면으로 2022년에 문을 열었고, 안암동에는 8면짜리 작은 거주자주차장이 있어요. 2024년에는 성신여대 기숙사 주차장 5면을 주민에게 열었어요.",
+    why:"땅값이 비싼 도시에서는 주차장을 새로 짓는 데 돈이 아주 많이 들어요. 그래서 학교, 교회, 아파트처럼 이미 있는 주차장을 주민에게 빌려 주는 방법도 함께 쓰고 있어요.",
+    think:"같은 돈으로 자리를 더 많이 만들려면 어떻게 해야 할까요? '새로 짓기'와 '있는 것 나눠 쓰기'의 좋은 점과 나쁜 점을 비교해 보세요.",
+    source:"아시아경제 「성북구, 주택가 주차난 숨통…석관동 공영주차장 준공」, 2024-08-30 · 연합뉴스 「성북구-성신여대, 기숙사 부설주차장 개방 협약…주차난 해소」, 2024-06-03"
+  },
+
+  /* ---------------- 4. 흡연 ---------------- */
+  {
+    n:16, field:"흡연", theme:"smoke",
+    title:"금연구역을 넓혔더니 옆 골목으로 옮겨 간 담배 연기",
+    dong:"동선동 · 성신여대입구 하나로거리",
+    preview:"금연거리 240m를 넓혔더니 흡연자가 상가 사이 골목으로 몰려갔어요.",
+    where:"성신여대입구역 근처 하나로거리(동소문로22길)와 유타몰 옆 골목이에요.",
+    situation:"성북구는 하나로거리 240m 구간을 금연구역으로 정했어요. 그런데 담배를 피우는 사람들이 상가 사이 좁은 골목과 유타몰 옆 통행로로 옮겨 가서, 담배 연기를 피하려는 주민과 학생들이 계속 불편을 겪었어요. 결국 2025년에는 유타몰과 주변 골목까지 금연구역을 넓혔고, 8월 1일부터 어기면 10만 원의 과태료를 내게 했어요. 성신여대입구 주변 1km 안에는 초·중·고등학교가 10곳 넘게 있어요.",
+    why:"금연구역만 정하면 담배를 피울 수 있는 다른 곳으로 사람이 옮겨 가요. 이렇게 금연구역을 피해 옮겨 다니는 것을 '풍선효과'라고 해요. 풍선을 한쪽에서 누르면 다른 쪽이 부풀어 오르는 것과 같아요.",
+    think:"사람을 쫓아내는 대신 담배를 피울 곳을 정해 준다면 어디가 좋을까요? 그곳은 어떤 모습이어야 할까요?",
+    source:"시민일보 「성북구, 하나로거리 금연구역 확대 지정」, 2025-05-13 · 딜라이브뉴스 「성신여대입구역 금연구역 확대…청소년 통학로 보호 나선다」, 2025-05-22"
+  },
+  {
+    n:17, field:"흡연", theme:"smoke",
+    title:"아파트 복도와 지하주차장에서 피우는 담배",
+    dong:"삼선동 · 삼선푸르지오아파트",
+    preview:"복도·계단·엘리베이터·지하주차장을 금연구역으로 정하려면 세대주 절반 이상의 동의가 필요해요.",
+    where:"삼선동 삼선푸르지오아파트 등 성북구의 공동주택이에요.",
+    situation:"삼선푸르지오아파트는 2026년 5월 1일부터 복도, 계단, 엘리베이터, 지하주차장에서 담배를 피우면 5만 원의 과태료를 내게 했어요. 이 아파트는 성북구에서 24번째로 금연구역이 된 공동주택이에요. 아파트를 금연구역으로 정하려면 세대주의 절반 이상이 동의해야 하고, 세대주 명부와 동의서, 건물 도면을 함께 내야 해요.",
+    why:"아파트는 개인 집이 모인 공간이라 구청이 마음대로 정할 수 없어요. 그래서 주민들이 먼저 '우리 건물도 금연구역으로 해 주세요'라고 신청해야 해요.",
+    think:"성북구에서 24호라는 숫자는 왜 적을까요? 동의를 받기 어려운 이유를 짐작해 보고, 더 쉽게 동의를 모으는 방법을 생각해 보세요.",
+    source:"성북구 고시공고 「공동주택 금연구역 지정 알림」(공고 제2026-116호), 2026-02-01 · 성북구 보건소 금연구역 안내"
+  },
+  {
+    n:18, field:"흡연", theme:"smoke",
+    title:"빗물받이를 막는 담배꽁초",
+    dong:"정릉동 · 길음동 · 장위동",
+    preview:"골목과 빗물받이에 버려진 담배꽁초가 비 오는 날 길이 잠기게 해요.",
+    where:"정릉아동보건지소 주변 골목, 길음어울림마당, 성신여대 하나로거리, 석관초등학교 근처 골목, 장위3동 래미안포레카운티 쪽문이에요.",
+    situation:"2023년 성북구가 주민 의견을 들은 곳은 정릉동, 길음동, 성신여대 앞, 석관초등학교 근처 골목이었어요. 이곳들은 담배 연기와 꽁초 때문에 민원이 계속 들어오는 곳이에요. 2026년 9월에는 장위3동 아파트 주민이 쪽문 근처에 흡연부스나 꽁초 전용 수거함을 만들어 달라고 신청했어요. 안암동에서 빗물받이를 청소했을 때도 낙엽과 함께 담배꽁초가 많이 나왔어요.",
+    why:"금연구역이 아닌 골목이나 아파트 경계는 '누가 관리하는 곳인지' 분명하지 않아요. 담배꽁초는 아주 작아서 길에 버려도 눈에 잘 띄지 않아요.",
+    think:"꽁초를 버리는 사람에게 벌을 주는 방법과, 버릴 곳을 마련해 주는 방법 중 무엇이 더 오래 효과가 있을까요?",
+    source:"메디컬프라임 「[성북구] 민원다발구역 금연지도원 특별활동실시」, 2023-11-30 · 성북구 「현장구청장실 주민제안」 63번, 2026-09-07"
+  },
+
+  /* ---------------- 5. 쓰레기 ---------------- */
+  {
+    n:19, field:"쓰레기", theme:"trash",
+    title:"봉투를 열어 범인을 찾는 '파봉단속'",
+    dong:"성북구 20개 동 · 상습투기 지역",
+    preview:"성북구는 버려진 봉투를 직접 열어 누가 버렸는지 찾아요. 2021년에는 450건을 적발했어요.",
+    where:"성북구 20개 동의 상습 무단투기 지역이에요. 골목, 화단, 주차장 입구처럼 늘 쓰레기가 쌓이는 곳이에요.",
+    situation:"성북구는 2026년 11월 11일 청소 담당 공무원과 기간제 근로자가 함께 상습 무단투기 지역의 봉투를 열어 보는 '파봉단속'을 했어요. 파봉단속은 버려진 봉투를 열어 영수증이나 택배 상자처럼 '누가 버렸는지' 알 수 있는 단서를 찾는 방법이에요. 2021년에는 무단투기 450건을 적발했어요. 담배꽁초나 휴지는 5만 원, 비닐봉지 등은 20만 원, 차로 실어다 버리면 50만 원의 과태료를 내요.",
+    why:"쓰레기 봉투에는 누가 버렸는지 적혀 있지 않아요. 버린 사람을 찾지 못하면 벌을 줄 수 없어서 같은 자리에 계속 버려요.",
+    think:"단속하는 사람을 계속 늘릴 수는 없어요. 사람들이 스스로 버리지 않게 만드는 방법에는 무엇이 있을까요?",
+    source:"서울동북신문 「성북구, 상습 무단투기 지역 합동 파봉단속 실시」, 2026-11-13 · 연합뉴스 「[OK!제보] 차에 싣고온 쓰레기 무단투기하다 딱걸려…\"과태료 50만원\"」, 2022-01-20"
+  },
+  {
+    n:20, field:"쓰레기", theme:"trash",
+    title:"CCTV 302대가 있는데도 '예산이 없다'는 말",
+    dong:"성북구 전역 · 아리랑로 일대",
+    preview:"성북구는 무단투기 감시 CCTV를 302대 운영해요. 그런데 민원이 들어온 골목에는 계속 설치가 안 돼요.",
+    where:"아리랑로 111-8 앞 화단길처럼 쓰레기가 반복해서 버려지는 골목이에요.",
+    situation:"성북구에는 쓰레기 무단투기를 찍는 CCTV가 302대 있어요. 2026년 10월 8일에는 6곳에 새로 설치한다고 알렸어요. 그런데 한 주민은 '아리랑로 화단길에 1년 넘게 쓰레기가 버려지고, 신고하고 1~2주 지나면 또 쌓인다. CCTV만 있으면 이런 일은 없을 텐데, 주민센터와 구청에서는 몇 년째 예산이 없다는 말만 한다'고 민원을 냈어요. 구청은 4월에 단속원이 버린 사람을 찾아 과태료를 매겼고, CCTV는 동주민센터가 필요하다고 판단해 구청에 요청하는 방식이라고 답했어요.",
+    why:"CCTV를 어디에 달지 정하는 순서가 '동 주민센터가 골라서 구청에 요청하기'로 되어 있어요. 그래서 같은 골목에서 계속 민원이 나도 다른 곳이 먼저 선택되면 순서가 밀려요.",
+    think:"302대를 이미 가지고 있다면, 어디에 두는 것이 가장 효과적일까요? '가장 많이 민원이 들어온 곳'부터 두는 방법은 어떨까요?",
+    source:"성북구청 「영상정보처리기기 설치 및 운영지침」 · 성북구 「구청장에게 바란다」 민원 20261012-00008 및 청소행정과 답변, 2026-10-19"
+  },
+  {
+    n:21, field:"쓰레기", theme:"trash",
+    title:"주민이 직접 치우는 하천 쓰레기",
+    dong:"정릉천 · 성북천 · 우이천",
+    preview:"정릉천은 2022년부터 매달 셋째 주 목요일에 주민들이 모여 청소해요.",
+    where:"정릉천 산책로와 개울섬, 성북천, 우이천이에요.",
+    situation:"정릉3동 주민자치회, 자율방재단, 정릉시장 상인회, '정릉천 별동대'는 2022년 8월부터 매달 셋째 주 목요일에 정릉천 산책로와 하천 쓰레기를 치워요. 2024년 11월 대청소에는 국민대 학생과 주민 등 60여 명이 모여 물속 쓰레기를 건지고 EM흙공(물을 깨끗하게 하는 흙공)을 던졌어요. 2026년 10월에도 4개 구간에서 주민 22명이 청소를 했어요. 성북천에서는 매주 수요일과 일요일에 '성북천결' 봉사가 열려요.",
+    why:"하천은 길게 이어져 있어서 청소하는 사람이 매일 다 볼 수 없어요. 그래서 지역 주민이 시간을 정해 함께 치우는 방법에 기대게 돼요.",
+    think:"봉사하는 사람이 갑자기 줄어들면 어떻게 될까요? 사람이 없어도 쓰레기가 덜 쌓이게 하는 방법을 생각해 보세요.",
+    source:"시사경제신문 「성북구, '정릉천 살리기 사업' 깨끗한 마을 만들기 나서」, 2024-11-26 · 국제뉴스 「성북구 정릉3동, 주민·학생 합심해 정릉천 환경보호 활동 펼쳐」, 2026-10-27"
+  },
+  {
+    n:22, field:"쓰레기", theme:"trash",
+    title:"음식물쓰레기 86%를 줄인 기계, 그런데 철거 요청도",
+    dong:"길음동 · 삼선동 · 하월곡동",
+    preview:"성북구는 전국에서 처음으로 음식물쓰레기 무게를 재는 기계를 설치했어요. 100kg이 16kg으로 줄었어요.",
+    where:"길음뉴타운, 삼선푸르지오, 하월곡동 꿈의 푸르지오 등 공동주택 단지예요.",
+    situation:"성북구는 2013년 6월 1일 전국에서 처음으로 음식물쓰레기 무게를 재서 돈을 받는 기계(RFID 종량기)를 설치했어요. 100kg을 넣으면 16kg만 남아 86%가 줄었고, 남은 것은 퇴비나 연료로 다시 썼어요. 그런데 길음뉴타운에서는 기계에서 나는 소음과 냄새, 흘러나온 물 때문에 주민들이 철거를 요청했고, 25대 가운데 18대가 철거됐어요. 지금은 음식물쓰레기 1kg에 130원을 내요.",
+    why:"음식물은 썩으면서 냄새가 나고 물이 흘러요. 기계를 집 가까이에 두면 냄새와 소리가 바로 옆집까지 가서 불편해져요.",
+    think:"쓰레기를 줄이는 좋은 방법인데 불편해서 철거한다면, 좋은 점은 살리고 불편한 점은 줄이는 방법이 있을까요?",
+    source:"아시아경제 「성북구, 전국 최초 종량처리 장치로 음식물쓰레기 줄여」, 2013-05-31 · 성북구의회 제221회 본회의 제2차 회의록, 2013-12-12"
+  },
+  {
+    n:23, field:"쓰레기", theme:"trash",
+    title:"의류수거함 44개가 35개로 줄었어요",
+    dong:"종암동",
+    preview:"옷을 버리는 수거함에 이불과 생활쓰레기가 쌓여 9개를 철거했어요.",
+    where:"종암동 골목골목의 의류수거함(안 쓰는 옷을 모으는 함)이에요.",
+    situation:"종암동에는 원래 의류수거함이 44개 있었어요. 그런데 이불이나 생활쓰레기를 함께 버리는 사람이 늘어 수거함 주변이 지저분해졌고, 구는 무단투기가 심한 곳의 수거함 9개를 철거해 35개만 남았어요. 종암동주민센터는 '이불이나 다른 쓰레기는 버리지 말라는 안내가 붙어 있어도 계속 버려서, 투기가 너무 심한 곳은 철거하고 있다'고 말했어요.",
+    why:"수거함은 옷만 넣도록 되어 있지만, 넣는 사람을 지켜보는 사람이 없어요. 그러면 '여기에도 버려도 되겠구나' 하고 다른 쓰레기가 함께 쌓여요.",
+    think:"수거함을 없애면 옷을 버릴 곳이 사라져요. 없애지 않으면서 깨끗하게 지키는 방법은 무엇일까요?",
+    source:"비즈한국 「[현장] 사라지는 의류수거함…재활용 가능한 옷도 그냥 버리라고?」, 2022-10-25 · 공공데이터포털 「서울특별시 성북구_의류수거함 현황」"
+  },
+  {
+    n:24, field:"쓰레기", theme:"trash",
+    title:"10년 동안 쌓인 쓰레기 4톤",
+    dong:"정릉동 · 성북동",
+    preview:"정릉3동 하천변 빈 땅에 10년 넘게 쓰레기가 쌓여 있었어요. 주민 30여 명이 4톤을 치웠어요.",
+    where:"정릉3동 성원아파트 앞 하천변의 사유지(개인이 가진 땅)예요. 성북동의 빈집 주변도 마찬가지예요.",
+    situation:"정릉3동 하천변의 개인 땅에 10년이 넘도록 폐비닐, 플라스틱, 가방, 가구 같은 쓰레기가 쌓여 있었어요. 바로 옆이 주민 운동기구라서 민원이 많았어요. 2024년 9월 27일 주민과 공무원 등 30여 명이 모여 쓰레기를 치웠는데, 무게가 약 4톤이었어요. 4톤은 1톤 트럭 4대를 가득 채우는 양이에요. 성북동에서는 빈집을 점검할 때 '다른 사람이 쓰레기를 버렸는지'도 함께 확인해요.",
+    why:"개인 땅이라 구청이 마음대로 치울 수 없고, 땅 주인은 치울 돈과 시간이 없어요. 누구 책임인지 분명하지 않아서 그대로 오래 남아요.",
+    think:"'내 땅이 아닌데'라고 생각하는 사람과 '내 동네인데'라고 생각하는 사람이 함께 해결하려면 무엇이 필요할까요?",
+    source:"뉴스로 「성북구, 정릉3동 장기 방치 쓰레기 4톤 말끔히 '민·관 협력 해결 빛나!'」, 2024-09-30 · 뉴스로 「성북동, 통장과 함께 붕괴·화재 등 안전사고 대비 관내 빈집 일제 점검」, 2025-04-03"
+  },
+  {
+    n:25, field:"쓰레기", theme:"trash",
+    title:"초등학교 50m 앞 재활용 선별장",
+    dong:"석관동 · 석계초등학교 옆",
+    preview:"석계초등학교 담장 바로 옆에서 재활용 쓰레기를 고르고 압축해요.",
+    where:"석관동의 재활용 선별장이에요. 석계초등학교 출입문에서 50m도 안 되는 곳에 있어요.",
+    situation:"석관동 재활용 선별장은 2001년에 문을 열고, 성북구에서 나오는 재활용 쓰레기를 골라 압축해요. 바로 옆이 석계초등학교라서 악취와 소음, 쓰레기를 실은 트럭 때문에 민원이 계속됐어요. 학교 출입문에서 50m 안쪽은 '교육환경 보호구역'으로 폐기물 처리 시설을 둘 수 없게 되어 있어서, 규칙에 어긋난다는 지적도 나왔어요. 한편 성북구는 2026년 환경부 평가에서 우수 기관으로 뽑히기도 했어요.",
+    why:"선별장이 필요해서 지은 2001년에는 주변에 학교가 이렇게 가까이 있는지 충분히 따져보지 않았어요. 시설을 옮기려면 새 자리와 큰돈이 필요해 20년 넘게 그대로예요.",
+    think:"시설이 잘 돌아가는 것과 좋은 자리에 있는 것은 다른 문제예요. 둘을 어떻게 함께 해결할 수 있을까요?",
+    source:"서울Pn 「김태수 서울시의원, 성북구 재활용 선별장 이전 촉구」, 2022-09-20 · 문화일보 「성북구, '2026년 폐기물 처리 평가' 우수 기관 선정」, 2026-11-23"
+  },
+  {
+    n:26, field:"쓰레기", theme:"trash",
+    title:"분리배출 점수 37.9점, 서울에서 가장 낮은 편",
+    dong:"성북구 전역",
+    preview:"서울시 평가에서 성북구 분리배출 점수는 37.9점. 1위 영등포구는 79.6점이었어요.",
+    where:"성북구 주택가의 분리수거함과 골목이에요.",
+    situation:"서울시가 2025년에 자치구별 재활용 성과를 평가했는데, '쓰레기를 잘 나눠 버리고 잘 모았는가'를 재는 항목에서 성북구는 37.9점을 받았어요. 1위인 영등포구 79.6점과는 41.7점 차이예요. 성북구 주택가에서는 분리수거가 되지 않은 채 버려진 쓰레기가 자주 발견돼요. 잘못 버리면 최대 100만 원의 과태료를 내야 해요. 성북구는 종이팩, 폐건전지, 플라스틱 장난감을 가져오면 종량제 봉투로 바꿔 주는 '자원순환데이 상점'도 운영해요.",
+    why:"분리배출 규칙은 자주 바뀌고 품목마다 다르게 버려야 해요. 특히 주택가와 원룸촌에는 아파트 같은 분리수거장이 없어서 규칙을 익히기 어려워요.",
+    think:"점수를 올리려면 주민을 혼내야 할까요, 알려 줘야 할까요? 우리 동네에서 가장 쉽게 할 수 있는 일부터 생각해 보세요.",
+    source:"스포트라이트(서울신문) 「유만희 서울시의회 환경수자원위원회 부위원장 '재활용 선별시설 평가 따로, 개선 따로…'」, 2026-11-04 · 연합뉴스 「성북구, 카페 '커피박·종이팩' 통합 수거한다」, 2026-08-14"
+  },
+  {
+    n:27, field:"쓰레기", theme:"trash",
+    title:"새벽 1시 15분에 울리는 쓰레기차 소리",
+    dong:"길음동 · 아리랑로19길",
+    preview:"성북구에는 쓰레기를 잠시 두는 시설이 없어 밤에 바로 실어 날라요. 그래서 새벽 소음이 생겨요.",
+    where:"아리랑로19길 중앙하이츠빌아파트 106동처럼 쓰레기 수거장과 가까운 집이에요.",
+    situation:"2026년 6월, 한 주민이 '거의 매년 이 민원을 낸다. 새벽 1시 15분에 쓰레기차 후진 경고음이 집 전체를 울린다. 침실을 가장 먼 방으로 옮겼는데도 소리가 들린다'며 밤 10시 전에 수거해 달라고 했어요. 청소 담당 부서는 '성북구에는 쓰레기를 잠시 모아 두는 곳이 없어서, 수거한 날 바로 처리장으로 가져가야 해 밤에 일할 수밖에 없다'고 답했어요. 이후 수거 회사가 길을 바꾸어 7월부터는 밤 11시 전으로 옮겼어요.",
+    why:"쓰레기를 잠시 두었다가 낮에 옮길 수 있는 시설이 없으면, 밤에라도 바로 처리장으로 가져가야 해요. 그래서 밤에 차가 다니고 소음이 생겨요.",
+    think:"수거 시간을 당기면 다른 사람에게 어떤 문제가 생길까요? 모두의 불편을 조금씩 나누는 방법을 생각해 보세요.",
+    source:"성북구청 「구청장에게 바란다」 민원 20260623-00004 및 청소행정과 답변, 2026-06-26"
+  },
+  {
+    n:28, field:"쓰레기", theme:"trash",
+    title:"연휴가 끼면 사흘 치 쓰레기가 길에",
+    dong:"성북구 모든 동",
+    preview:"2026년 8월에는 광복절과 대체공휴일이 겹쳐 사흘 동안 수거가 멈출 뻔했어요.",
+    where:"성북구 모든 동의 골목과 아파트 수거장이에요.",
+    situation:"성북구는 원래 매주 토요일 저녁과 공휴일 전날 저녁에는 쓰레기를 수거하지 않아요. 2026년 8월에는 광복절이 토요일이고 월요일이 대체공휴일이라 사흘 동안 쓰레기가 쌓일 상황이었어요. 그래서 성북구는 8월 14일 금요일 저녁에는 평소처럼 수거하기로 했어요. 동네마다 버리는 날이 화·목·일이거나 월·수·금으로 나뉘고, 수거하는 회사도 3곳이에요.",
+    why:"쉬는 날에는 쓰레기를 처리하는 곳도 쉬기 때문이에요. 그래서 연휴가 길면 쌓인 쓰레기를 치울 시간이 모자라 길에 넘치게 돼요.",
+    think:"연휴가 오기 전에 미리 알려 주면 어떻게 달라질까요? 쓰레기가 쌓이지 않게 하는 다른 방법도 생각해 보세요.",
+    source:"성북구 「2026년 8월 공휴일 전후 생활쓰레기 배출 및 수거 안내」 · 성북구 소식지 「성북NEWS」 2024년 9월호"
+  },
+  {
+    n:29, field:"쓰레기", theme:"trash",
+    title:"파티룸 쓰레기는 누가 치울까요?",
+    dong:"장위동 · 대학가 골목",
+    preview:"파티룸은 '가게'인지 '집'인지 애매해서 쓰레기 규칙이 없어요.",
+    where:"주택가 골목과 지하 공간의 파티룸(여럿이 모여 놀도록 빌려 주는 곳)이에요.",
+    situation:"2026년 2월, 성북구의회에서 파티룸 이야기가 나왔어요. '주택가 골목과 지하 공간 근처 파티룸에서 놀고 난 뒤 쓰레기를 아무 데나 버리고, 밤늦게 사람들이 드나들어 불편하다'는 민원이 계속 들어온다는 거예요. 의원은 '정해진 방식대로 버리지 않은 쓰레기는 보기에 나쁜 것을 넘어 불이 나거나 벌레가 생기는 문제로 이어진다'며, 파티룸이 몇 곳인지 먼저 조사하고 쓰레기 배출 방법을 정해 주자고 했어요.",
+    why:"파티룸은 집도 아니고 일반 가게도 아니어서 쓰레기를 어떻게 버려야 하는지 정한 규칙이 없어요. 규칙이 없으니 주인도 손님도 어떻게 해야 할지 몰라요.",
+    think:"새로운 종류의 공간이 생기면 왜 규칙이 늦게 만들어질까요? 규칙을 만들 때 누구의 이야기를 먼저 들어야 할까요?",
+    source:"성북구의회 제316회 본회의 제1차 회의록, 진선아 의원 5분 자유발언, 2026-02-20 · 시정신문 「진선아 의원, 파티룸 증가로 인한 민원 해법 제시」, 2026-03-04"
+  },
+  {
+    n:30, field:"쓰레기", theme:"trash",
+    title:"대학이 7곳인데 원룸촌엔 분리수거장이 없어요",
+    dong:"동선동 · 안암동 원룸촌",
+    preview:"성북구에는 4년제 대학이 7곳, 대학생이 약 7만 명 살아요. 그런데 원룸촌에는 분리수거장이 없어요.",
+    where:"성신여대, 고려대, 국민대 주변 원룸촌과 동선동, 안암동이에요.",
+    situation:"성북구에는 고려대, 국민대, 동덕여대, 서경대, 성신여대, 한성대, 한예종 등 4년제 대학이 7곳 있어 전국 자치구 가운데 가장 많아요. 동선동과 안암동은 젊은 사람이 약 50%예요. 그런데 원룸촌에는 아파트 같은 분리수거장이 없고, 좁은 출입구와 주차 문제로 큰 가구를 내놓기도 어려워요. 부러진 우산을 버리려던 주민은 '비닐을 나눠도 긴 쇠를 접어 봉투에 넣기 어렵고, 아파트라면 쉽겠지만 별도 분리수거 시설이 없는 원룸촌에서는 어렵다'고 말했어요.",
+    why:"원룸은 1인 가구가 많고 이사도 잦아서 이웃과 규칙을 함께 익힐 기회가 적어요. 게다가 건물마다 수거 공간이 따로 없어 길에 내놓게 돼요.",
+    think:"대학과 구청이 함께 할 수 있는 일은 무엇일까요? 캠퍼스와 원룸촌 사이에 어떤 약속이 필요할까요?",
+    source:"서울시티 「성북구, 지역·대학 연결하는 '대학도시 성북' 종합계획 공개」, 2026-03-13 · 스토리오브서울 「처치 곤란 쓰레기가 된 우산」, 2026-09-03"
+  },
+  {
+    n:31, field:"쓰레기", theme:"trash",
+    title:"상인들이 매달 직접 치우는 전통시장",
+    dong:"길음 · 돈암 · 장위 · 정릉",
+    preview:"성북구 6개 전통시장 상인들이 매달 날짜를 정해 시장을 청소해요.",
+    where:"길음, 돈암, 돌곶이, 장위, 정릉, 정릉아리랑 전통시장이에요.",
+    situation:"2024년 11월부터 6개 전통시장 상인회가 '안심클린 전통시장' 캠페인을 하고 있어요. 매달 날짜를 정해 시장 구석구석의 쓰레기를 치우고, 물로 씻고, 방역 소독을 해요. 장위전통시장은 재개발로 사람들이 다 떠난 구역에 남은 쓰레기 처리도 함께 떠안았어요. 장위전통시장 근처 낡은 상가에서는 2025년 11월에 불이 나기도 했어요.",
+    why:"시장은 하루에도 포장재와 남은 음식이 많이 나와요. 골목이 좁고 건물이 오래돼서 쓰레기가 쌓이기 쉬운데, 구청 청소만으로는 다 치우기 어려워요.",
+    think:"장사하는 사람들이 직접 치우는 것과 구청이 치우는 것, 각각의 좋은 점은 무엇일까요? 더 나은 방법은 없을까요?",
+    source:"서울Pn 「성북구, 안심클린 전통시장으로 쾌적하게」, 2024-11-15 · 성북마을아카이브 「장위전통시장 상인회장 길희봉 5」, 2019-04-05"
+  },
+  {
+    n:32, field:"쓰레기", theme:"trash",
+    title:"폐지를 모으는 어르신 124명, 지원은 장갑 10켤레",
+    dong:"성북구 골목 · 아파트 단지",
+    preview:"성북구에서 폐지를 모으는 65세 이상 어르신은 124명. 지원 예산은 600여만 원이에요.",
+    where:"성북구 골목과 아파트 단지예요. 어르신들이 손수레를 끌고 폐지를 모으는 곳이에요.",
+    situation:"성북구에서 폐지를 모아 파는 65세 이상 어르신은 124명이에요. 성북구가 이분들에게 주는 것은 장갑 10켤레와 파스 2세트, 예산은 600여만 원이에요. 2019년에 '재활용품 수집인을 돕는 조례'를 만들었지만 6년 동안 크게 달라진 것이 없었어요. 2024년 전국 조사에서는 폐지 수집인의 평균 나이가 78세, 한 달에 버는 돈이 76만 6,000원이었어요.",
+    why:"폐지 수집인은 '일하는 사람'으로 등록되어 있지 않아서 건강검진이나 안전보험 같은 도움을 받기 어려워요. 예산도 아주 적게 잡혀 있어요.",
+    think:"이분들이 안전하게 일할 수 있게 하려면 무엇이 가장 필요할까요? 장갑 말고도 생각해 볼 수 있는 물건과 도움을 적어 보세요.",
+    source:"성북구의회 제315회 본회의 제2차 회의록, 권영애 의원 5분 자유발언, 2025-12-12 · 보건복지부 폐지 수집인 실태조사, 2024"
+  }
+];
+
+const FIELDS = [
+  {key:"안전", theme:"safety", title:"안전", desc:"무너짐·땅꺼짐·침수·교통사고·화재"},
+  {key:"환경오염", theme:"env", title:"환경오염", desc:"물·공기·소음·먼지·쓰레기 처리 시설"},
+  {key:"주차", theme:"park", title:"주차", desc:"기다리는 자리·불법주차·단속 갈등"},
+  {key:"흡연", theme:"smoke", title:"흡연", desc:"금연구역·간접흡연·담배꽁초"},
+  {key:"쓰레기", theme:"trash", title:"쓰레기", desc:"무단투기·분리배출·수거·재활용"}
+];
+
+const sectionsEl = document.getElementById("sections");
+let idx = 0;
+let lastFocus = null;
+
+/* build board */
+FIELDS.forEach((f, fi) => {
+  const items = ISSUES.filter(it => it.field === f.key);
+  const sec = document.createElement("section");
+  sec.className = "field f-" + f.theme;
+  sec.setAttribute("aria-labelledby", "sec-" + fi);
+
+  const head = document.createElement("div");
+  head.className = "head";
+  head.innerHTML =
+    '<span class="no">' + (fi + 1) + '분야</span>' +
+    '<h2 id="sec-' + fi + '">' + f.title + '</h2>' +
+    '<span class="cnt">' + items.length + '가지 · ' + f.desc + '</span>';
+  sec.appendChild(head);
+
+  const grid = document.createElement("div");
+  grid.className = "grid";
+
+  items.forEach(it => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "card";
+    btn.setAttribute("aria-label", it.n + "번 " + it.field + " · " + it.title + " 자세히 보기");
+    btn.innerHTML =
+      '<span class="top"><span class="num">' + String(it.n).padStart(2, "0") + '</span>' +
+      '<span class="chip">' + it.field + '</span></span>' +
+      '<span class="card-title">' + it.title + '</span>' +
+      '<span class="where-line">📍 ' + it.dong + '</span>' +
+      '<span class="preview">' + it.preview + '</span>' +
+      '<span class="more">자세히 읽기 <span class="arrow">→</span></span>';
+    btn.addEventListener("click", () => openModal(ISSUES.indexOf(it)));
+    grid.appendChild(btn);
+  });
+
+  sec.appendChild(grid);
+  sectionsEl.appendChild(sec);
+});
+
+/* modal */
+const overlay = document.getElementById("overlay");
+const sheet = document.getElementById("sheet");
+const el = {
+  num: document.getElementById("mNum"),
+  chip: document.getElementById("mChip"),
+  title: document.getElementById("mTitle"),
+  where: document.getElementById("mWhere"),
+  situation: document.getElementById("mSituation"),
+  why: document.getElementById("mWhy"),
+  think: document.getElementById("mThink"),
+  src: document.getElementById("mSrc"),
+  prev: document.getElementById("mPrev"),
+  next: document.getElementById("mNext"),
+  count: document.getElementById("mCount"),
+  close: document.getElementById("mClose")
+};
+
+function render(i){
+  const it = ISSUES[i];
+  idx = i;
+  sheet.className = "sheet f-" + it.theme;
+  sheet.style.setProperty("--accent", "var(--" + it.theme + ")");
+  sheet.style.setProperty("--bg", "var(--" + it.theme + "-bg)");
+  sheet.style.setProperty("--soft", "var(--" + it.theme + "-soft)");
+
+  el.num.textContent = String(it.n).padStart(2, "0");
+  el.chip.textContent = it.field;
+  el.title.textContent = it.title;
+  el.where.textContent = it.where;
+  el.situation.textContent = it.situation;
+  el.why.textContent = it.why;
+  el.think.textContent = it.think;
+  el.src.innerHTML = "<b>출처</b> · " + it.source;
+
+  el.prev.disabled = i === 0;
+  el.next.disabled = i === ISSUES.length - 1;
+  el.count.textContent = (i + 1) + " / " + ISSUES.length;
+
+  document.getElementById("mBody").scrollTop = 0;
+  document.getElementById("sheet").scrollTop = 0;
+}
+
+function openModal(i){
+  lastFocus = document.activeElement;
+  render(i);
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("locked");
+  // move focus into the dialog
+  setTimeout(() => { el.close.focus({preventScroll:true}); }, 30);
+}
+
+function closeModal(){
+  overlay.classList.remove("open");
+  overlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("locked");
+  if (lastFocus && lastFocus.focus) lastFocus.focus({preventScroll:true});
+}
+
+el.close.addEventListener("click", closeModal);
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+el.prev.addEventListener("click", () => { if (idx > 0) render(idx - 1); });
+el.next.addEventListener("click", () => { if (idx < ISSUES.length - 1) render(idx + 1); });
+
+document.addEventListener("keydown", e => {
+  if (!overlay.classList.contains("open")) return;
+  if (e.key === "Escape") { e.preventDefault(); closeModal(); }
+  else if (e.key === "ArrowLeft" && idx > 0) { e.preventDefault(); render(idx - 1); }
+  else if (e.key === "ArrowRight" && idx < ISSUES.length - 1) { e.preventDefault(); render(idx + 1); }
+  else if (e.key === "Tab") {
+    // keep focus inside the dialog
+    const focusables = sheet.querySelectorAll('button:not(:disabled)');
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
+
+/* swipe left/right on tablet & phone */
+let touchX = null, touchY = null;
+sheet.addEventListener("touchstart", e => {
+  if (e.touches.length !== 1) return;
+  touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+}, {passive:true});
+sheet.addEventListener("touchend", e => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+    if (dx < 0 && idx < ISSUES.length - 1) render(idx + 1);
+    if (dx > 0 && idx > 0) render(idx - 1);
+  }
+  touchX = null; touchY = null;
+}, {passive:true});
+</script>
+</body>
+</html>
