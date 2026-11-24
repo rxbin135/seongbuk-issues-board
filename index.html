@@ -61,6 +61,77 @@
     border:1px solid transparent;
   }
 
+  /* ---------- example banner ---------- */
+  .example{
+    margin-top:26px;width:100%;display:flex;align-items:center;gap:20px;
+    text-align:left;cursor:pointer;font-family:inherit;color:inherit;
+    background:#fff;border:1px solid var(--trash-soft);border-left:7px solid var(--trash);
+    border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .example:hover,.example:focus-visible{
+    transform:translateY(-2px);
+    box-shadow:0 2px 4px rgba(60,45,30,.06), 0 16px 34px rgba(60,45,30,.10);
+  }
+  .example:focus-visible{outline:3px solid var(--trash);outline-offset:3px}
+  .example .thumb{
+    flex:0 0 auto;display:block;width:152px;height:104px;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);background:#f4efe6;
+  }
+  .example .thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+  .example .ebody{flex:1 1 auto;display:block;min-width:0}
+  .example .tag{
+    display:inline-block;font-size:13.5px;font-weight:800;letter-spacing:.01em;
+    color:var(--trash);background:var(--trash-bg);border-radius:999px;padding:3px 11px;margin-bottom:8px;
+  }
+  .example .ebody .btitle{
+    display:block;font-size:clamp(19px,2.1vw,22px);line-height:1.35;margin:0 0 6px;
+    letter-spacing:-.02em;font-weight:800;color:var(--ink);
+  }
+  .example .ebody .bdesc{display:block;margin:0;font-size:16px;line-height:1.6;color:var(--ink-soft)}
+  .example .ebody .bdesc b{color:var(--ink)}
+  .example .go{
+    flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;
+    font-size:15px;font-weight:800;color:#fff;background:var(--trash);
+    border-radius:999px;padding:10px 17px;white-space:nowrap;
+  }
+  .example .go .arrow{transition:transform .18s ease}
+  .example:hover .go .arrow{transform:translateX(4px)}
+
+  /* ---------- example image modal ---------- */
+  .img-sheet{
+    position:relative;width:100%;max-width:1180px;max-height:calc(100vh - 56px);
+    background:#fff;border-radius:24px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(20,15,10,.28);
+    display:flex;flex-direction:column;
+    transform:translateY(14px) scale(.985);transition:transform .2s ease;
+    --accent:var(--trash);--bg:var(--trash-bg);--soft:var(--trash-soft);
+  }
+  .overlay.open .img-sheet{transform:none}
+  .img-head{
+    flex:0 0 auto;display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;
+    padding:18px 74px 15px 24px;border-bottom:1px solid var(--line);background:#fff;
+  }
+  .img-head h2{margin:0;font-size:clamp(17px,2.1vw,21px);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+  .img-head .hint{font-size:13.5px;font-weight:700;color:var(--ink-mute)}
+  .img-body{
+    flex:1 1 auto;overflow:auto;-webkit-overflow-scrolling:touch;
+    padding:16px;background:#eae4da;
+  }
+  .img-body img{
+    display:block;width:100%;height:auto;margin:0 auto;border-radius:14px;
+    box-shadow:0 6px 20px rgba(40,30,20,.18);background:#fff;
+  }
+  .img-foot{
+    flex:0 0 auto;display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;justify-content:space-between;
+    padding:12px 20px;border-top:1px solid var(--line);background:#fff;
+    font-size:13.5px;line-height:1.6;color:var(--ink-mute);
+  }
+  .img-foot .img-link{font-weight:800;color:var(--trash);text-decoration:none;border-bottom:1px solid var(--trash-soft);padding-bottom:1px}
+  .img-foot .img-link:hover{border-bottom-color:var(--trash)}
+  .img-foot .img-link:focus-visible{outline:3px solid var(--trash);outline-offset:3px;border-radius:4px}
+
   /* ---------- sections ---------- */
   section.field{margin-top:56px}
   section.field > .head{
@@ -231,6 +302,17 @@
     .block p{font-size:17.5px;line-height:1.8}
     .sheet-foot{padding-bottom:calc(14px + env(safe-area-inset-bottom))}
     .nav-btn{padding:12px 14px;font-size:15px}
+    .example{margin-top:20px;flex-wrap:wrap;gap:14px;padding:15px}
+    .example .thumb{width:100%;height:168px;border-radius:12px}
+    .example .ebody{flex:1 1 100%}
+    .example .ebody .bdesc{font-size:15.5px}
+    .example .go{font-size:14px;padding:9px 15px}
+    .overlay.img-overlay{padding:0;align-items:stretch}
+    .img-sheet{max-width:none;max-height:100dvh;height:100vh;height:100dvh;border-radius:0}
+    .img-head{padding:16px 64px 12px 18px;padding-top:calc(16px + env(safe-area-inset-top))}
+    .img-head .close{top:12px;right:12px}
+    .img-body{padding:10px}
+    .img-foot{padding:11px 16px;padding-bottom:calc(11px + env(safe-area-inset-bottom));font-size:13px}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition:none!important;animation:none!important}
@@ -262,6 +344,18 @@
       <span class="f-smoke" style="background:var(--bg);color:var(--accent)">4. 흡연</span>
       <span class="f-trash" style="background:var(--bg);color:var(--accent)">5. 쓰레기</span>
     </div>
+
+    <button class="example" id="exampleBtn" type="button" aria-haspopup="dialog" aria-controls="imgOverlay">
+      <span class="thumb">
+        <img src="./canva-example.jpg" width="1536" height="1024" alt="성북구 분리배출 문제를 캔바로 정리한 예시 포스터 미리보기" decoding="async">
+      </span>
+      <span class="ebody">
+        <span class="tag">캔바 예시</span>
+        <span class="btitle">📌 캔바 정리 예시 보기</span>
+        <span class="bdesc">26번 분리배출 문제를 캔바로 정리한 예시예요. <b>문제 · 원인 · 상황 · 해결방법 · 내가 실천할 수 있는 것들</b> 순서로 칸을 나누었어요. 눌러서 크게 보세요.</span>
+      </span>
+      <span class="go">크게 보기 <span class="arrow">→</span></span>
+    </button>
   </header>
 
   <div id="sections"></div>
@@ -301,6 +395,24 @@
       <button class="nav-btn" id="mPrev" type="button">← 이전 문제</button>
       <span class="counter" id="mCount"></span>
       <button class="nav-btn" id="mNext" type="button">다음 문제 →</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay img-overlay" id="imgOverlay" aria-hidden="true">
+  <div class="img-sheet" id="imgSheet" role="dialog" aria-modal="true" aria-labelledby="imgTitle">
+    <div class="img-head">
+      <h2 id="imgTitle">📌 캔바 정리 예시 — 성북구 분리배출</h2>
+      <span class="hint">문제 · 원인 · 상황 · 해결방법 · 실천</span>
+    </div>
+    <button class="close" id="imgClose" type="button" aria-label="닫기">✕</button>
+    <div class="img-body">
+      <img src="./canva-example.jpg" width="1536" height="1024" decoding="async"
+           alt="성북구 분리배출 문제를 캔바로 정리한 예시 포스터. 가운데 제목은 '성북구, 분리배출이 더 필요해요!'이고, 문제·원인·상황·해결방법·내가 실천할 수 있는 것들 다섯 칸으로 나누어 정리했다. 상황 칸에는 성북구 37.9점과 영등포구 79.6점을 막대그래프로 비교해 41.7점 차이를 보여 준다.">
+    </div>
+    <div class="img-foot">
+      <span>26번 분리배출 문제를 다룬 캔바 예시 포스터예요. 칸 이름과 순서를 참고하세요.</span>
+      <a class="img-link" href="./canva-example.jpg" target="_blank" rel="noopener">원본 크기로 새 창에서 보기 ↗</a>
     </div>
   </div>
 </div>
@@ -816,6 +928,44 @@ sheet.addEventListener("touchend", e => {
   }
   touchX = null; touchY = null;
 }, {passive:true});
+
+/* ---------- example (canva) image modal ---------- */
+const imgOverlay = document.getElementById("imgOverlay");
+const imgSheet = document.getElementById("imgSheet");
+const exampleBtn = document.getElementById("exampleBtn");
+const imgClose = document.getElementById("imgClose");
+let imgLastFocus = null;
+
+function openExample(){
+  imgLastFocus = document.activeElement;
+  imgOverlay.classList.add("open");
+  imgOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("locked");
+  setTimeout(() => { imgClose.focus({preventScroll:true}); }, 30);
+}
+
+function closeExample(){
+  imgOverlay.classList.remove("open");
+  imgOverlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("locked");
+  if (imgLastFocus && imgLastFocus.focus) imgLastFocus.focus({preventScroll:true});
+}
+
+exampleBtn.addEventListener("click", openExample);
+imgClose.addEventListener("click", closeExample);
+imgOverlay.addEventListener("click", e => { if (e.target === imgOverlay) closeExample(); });
+
+document.addEventListener("keydown", e => {
+  if (!imgOverlay.classList.contains("open")) return;
+  if (e.key === "Escape") { e.preventDefault(); closeExample(); return; }
+  if (e.key === "Tab") {
+    const focusables = imgSheet.querySelectorAll('button, a[href]');
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 </script>
 </body>
 </html>
